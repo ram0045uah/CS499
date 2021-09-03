@@ -1,5 +1,5 @@
 # CS499
 
-## mightyPoints
+## mightyPoint
 
 ### 4FreeNotAVirus
