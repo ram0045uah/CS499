@@ -431,7 +431,27 @@ public class MightyPointGui extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         PopUp firstDialog = new PopUp();
-        new MightyPointGui().setVisible(true);
+        File imageFiles[];
+        for(;;){
+            
+            if(firstDialog.isVisible() == false){
+                new MightyPointGui().setVisible(true);
+                System.out.print("\nMightyPoint should be visible.");
+                break;
+            }
+            try{
+                File tempFiles[] = firstDialog.getFiles();
+                if(tempFiles.length > 0){
+                    firstDialog.setSlideStatus(false);
+                    imageFiles = tempFiles;
+                    break;
+                }
+            }
+            catch(Exception e){
+            }
+            
+        };
+        
         
         /* Create and display the form */
         //java.awt.EventQueue.invokeLater(new Runnable() {
