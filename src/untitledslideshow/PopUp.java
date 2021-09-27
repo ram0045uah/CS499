@@ -7,6 +7,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,11 +24,12 @@ import javax.swing.JLabel;
  *
  * @author Roberto Murcia
  */
+
 public class PopUp {
-    private boolean isNewSlide;
+    private boolean slideStatus = true;
     public PopUp(){
+       
         //-----------------POPUP CREATION-----------------------------//
-                isNewSlide = false;
                 JFrame firstFrame = new JFrame();
                 firstFrame.setLayout(new FlowLayout());
                 firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,19 +60,45 @@ public class PopUp {
                     @Override
                     public void actionPerformed(ActionEvent e){
                         System.out.println("New Slide Pressed.");
-                        isNewSlide = true;
                         JFileChooser filechooser = new JFileChooser();
                         filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
-                        //filechooser.addChoosableFileFilter(new FileNameExtensionFilter("JPEG Images", "jpeg"));
-                        //filechooser.setAcceptAllFileFilterUsed(true);
                         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                         filechooser.showOpenDialog(null);
-                        File imageDirectory = filechooser.getCurrentDirectory();
-                        System.out.print(imageDirectory);
+                        File imageDirectory = filechooser.getSelectedFile();
+                        File[] fileDirectories = imageDirectory.listFiles();
+                        //File[] actualImages = null;
+                        int counter = 0;
+                        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
+                        for (File fileDirectory : fileDirectories) {
+                            counter++;
+                            Path filePath = fileDirectory.toPath();
+                            try{
+                                if (matcher.matches(filePath)){
+                                System.out.print("\nItem name: " + filePath + " is an image!");
+                                }
+                            else{
+                                System.out.print("\nIndex: " + filePath + " is not an image");
+                                }
+                            }
+                            catch(NullPointerException exception){
+                                System.out.print("\nExceptionCaught with: " + filePath);
+                            }
+                            
+                        }
+                        firstFrame.setVisible(false);
+                        System.out.print("\nPop-up is no longer visible.");
+                        //System.out.print(actualImages);
                     }
                 });
     }
-    public boolean getSlideStatus(){
-        return isNewSlide;
+    public boolean isVisible(){
+        return slideStatus;
+    }
+    public void setSlideStatus(boolean trueFalse){
+        slideStatus = trueFalse;
+    }
+    public File[] getFiles(){
+        File images[] = null;
+        return images;
     }
 }
