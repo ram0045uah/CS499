@@ -9,10 +9,21 @@
  *
  * @author Roberto Murcia
  */
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import untitledslideshow.PopUp;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.util.ArrayList;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
@@ -24,6 +35,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private boolean isManual;
     private boolean isInterval;
     private int intervalTime;
+    private static boolean isVisible;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,9 +79,16 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
+        setLocationByPlatform(true);
+        setMaximumSize(new java.awt.Dimension(990, 720));
+        setMinimumSize(new java.awt.Dimension(990, 720));
+        setPreferredSize(new java.awt.Dimension(990, 668));
+        setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
 
         slideshowTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         slideshowTitleLabel.setText("Untitled Slideshow Editor");
+        slideshowTitleLabel.setMinimumSize(new java.awt.Dimension(250, 250));
 
         slideshowImagesScrollBar.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
 
@@ -94,13 +113,13 @@ public class MightyPointGui extends javax.swing.JFrame {
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(imagesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imagesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+                .addComponent(imagesScrollPane)
                 .addContainerGap())
         );
         imagesPanelLayout.setVerticalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, imagesPanelLayout.createSequentialGroup()
-                .addComponent(imagesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(imagesScrollPane)
                 .addContainerGap())
         );
 
@@ -124,7 +143,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(soundsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(soundsScrollPane)
-                    .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE))
+                    .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         soundsPanelLayout.setVerticalGroup(
@@ -152,14 +171,14 @@ public class MightyPointGui extends javax.swing.JFrame {
             transitionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transitionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(transitionsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+                .addComponent(transitionsScrollPane)
                 .addContainerGap())
         );
         transitionsPanelLayout.setVerticalGroup(
             transitionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transitionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(transitionsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                .addComponent(transitionsScrollPane)
                 .addContainerGap())
         );
 
@@ -176,11 +195,11 @@ public class MightyPointGui extends javax.swing.JFrame {
         iconPanel.setLayout(iconPanelLayout);
         iconPanelLayout.setHorizontalGroup(
             iconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         iconPanelLayout.setVerticalGroup(
             iconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         slideshowImagesList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -244,7 +263,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transitionLengthLabel)
                     .addComponent(transitionLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout extraSettingsPanelLayout = new javax.swing.GroupLayout(extraSettingsPanel);
@@ -259,9 +278,9 @@ public class MightyPointGui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(intervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(intervalLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
                 .addComponent(previewButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
                 .addComponent(transitionSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -282,7 +301,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                                 .addComponent(manualButton)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(extraSettingsPanelLayout.createSequentialGroup()
-                        .addContainerGap(53, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(previewButton)))
                 .addContainerGap())
         );
@@ -296,25 +315,23 @@ public class MightyPointGui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(slideshowTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(slideshowTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitButton))
+                .addGap(11, 11, 11)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(slideshowImagesScrollBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(soundsSlidesPanel)
                     .addComponent(mainTabbedPane)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(imagesSlidesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(imagesSlidesPanel)
                     .addComponent(extraSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +339,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(slideshowTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,8 +353,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(slideshowImagesScrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11))
+                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -365,7 +381,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private void previewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previewButtonActionPerformed
     
     }//GEN-LAST:event_previewButtonActionPerformed
-
+    
    /**
      * Allows the user to save a file that can be opened in the companion application
      * Will also create a folder in the project directory for saved slideshows if not present already
@@ -378,16 +394,15 @@ public class MightyPointGui extends javax.swing.JFrame {
             if(isSuccessful)
             {
                 
-                System.out.println("Directory for slides successfully created.");
+                System.out.println("\nDirectory for slides successfully created.");
             }
             else
             {
-                System.out.println("Directory already created.");
+                System.out.println("\nDirectory already created.");
             }
         }
         catch(SecurityException e)
         {
-            e.printStackTrace();
         }
         String filename = filenameTextBox.getText() + ".JSON";
         
@@ -398,16 +413,15 @@ public class MightyPointGui extends javax.swing.JFrame {
             isSuccessful = saveFile.createNewFile();
             if(isSuccessful)
             {
-                System.out.println("File created at " + saveFile.getCanonicalPath());
+                System.out.println("\nFile created at " + saveFile.getCanonicalPath());
             }
             else
             {
-                System.out.println("File already exists at location: " + saveFile.getCanonicalPath());
+                System.out.println("\nFile already exists at location: " + saveFile.getCanonicalPath());
             }
         }
         catch(IOException e)
         {
-            e.printStackTrace();
         }
         try
         {
@@ -418,53 +432,90 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         catch(IOException e)
         {
-            e.printStackTrace();
         }
      
     }//GEN-LAST:event_saveButtonActionPerformed
-
+    /*private static void setVisibility(boolean trueFalse){
+        isVisible = trueFalse;
+    }*/
+    /*private static boolean getVisible(){
+        return isVisible;
+    }*/
     /**
      * Main will begin by providing a popup, asking the user if they would like to
-     * create a new slideshow, or import an old one. The editor will not open unless
-     * an option is chosen by the user.
+     * create a new slideshow, or import an old one. The editor should not open unless
+     * an option is chosen by the user. Once a directory is chosen, all available .jpg files
+     * will be found and put into ArrayList imagePaths. From there, this list can be sent to
+     * various classes that will provide thumbnails, along with creating Item objects for these
+     * images.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        PopUp firstDialog = new PopUp();
-        File imageFiles[];
-        for(;;){
+        JFrame firstFrame = new JFrame();
+        firstFrame.setLayout(new FlowLayout());
+        firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel firstLabel = new JLabel();
+        JLabel secondLabel = new JLabel();
+        JButton newSlide = new JButton();
+        JButton oldSlide = new JButton();
+        firstLabel.setText("Welcome to the mightyPoint slideshow editor!");
+        secondLabel.setText("Choose from either of the following options: ");
+        newSlide.setText("Create a new slideshow");
+        oldSlide.setText("Import an old slideshow");
+        firstFrame.add(firstLabel);
+        firstFrame.add(secondLabel);
+        firstFrame.add(newSlide);
+        firstFrame.add(oldSlide);
+                
+        //----------------SIZE AND LOCATION OF POPUP------------------//
+        firstFrame.setPreferredSize(new Dimension(400,150));
+        firstFrame.pack();
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - firstFrame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - firstFrame.getHeight()) / 2);
+        firstFrame.setLocation(x, y);
+        firstFrame.setResizable(false);
+        //firstFrame.setAlwaysOnTop(true);
+        firstFrame.setVisible(true);
+        //setVisibility(true);
+        newSlide.addActionListener((ActionEvent e) -> {
+            JFileChooser filechooser = new JFileChooser();
+            filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
+            filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             
-            if(firstDialog.isVisible() == false){
-                new MightyPointGui().setVisible(true);
-                System.out.print("\nMightyPoint should be visible.");
-                break;
-            }
+            filechooser.showOpenDialog(null);
+            File imageDirectory = filechooser.getSelectedFile();
+            File fileDirectories[] = imageDirectory.listFiles();
+            int counter = 0;
+            PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
+            ArrayList<String> imagePaths = new ArrayList<>();
             try{
-                File tempFiles[] = firstDialog.getFiles();
-                if(tempFiles.length > 0){
-                    firstDialog.setSlideStatus(false);
-                    imageFiles = tempFiles;
-                    break;
+                for (File fileDirectory : fileDirectories) {
+                    counter++;
+                    Path filePath = fileDirectory.toPath();
+                    if (matcher.matches(filePath)){
+                        System.out.print("Item name: " + filePath + " is an image!\n");
+                        imagePaths.add(filePath.toString());
+                    }
+                    else{
+                        System.out.print("\nIndex: " + filePath + " is not an image\n");
+                    }
                 }
             }
-            catch(Exception e){
+            catch(NullPointerException exception){
+                System.out.print("An exception was found at index: " + counter);
             }
             
-        };
+            System.out.print(imagePaths);
+            //setVisibility(true); 
+        });   
+        
         
         
         /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(new Runnable() {
-           // @Override
-            //public void run() {
-                
-              //  PopUp firstDialog = new PopUp();
-               // new MightyPointGui().setVisible(true);
-                
-            
-                
-            //}
-        //});
+        java.awt.EventQueue.invokeLater(() -> {
+            new MightyPointGui().setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
