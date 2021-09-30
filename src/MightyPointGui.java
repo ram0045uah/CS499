@@ -106,6 +106,7 @@ public class MightyPointGui extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        imagesList.setDragEnabled(true);
         imagesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         imagesScrollPane.setViewportView(imagesList);
 
@@ -210,11 +211,13 @@ public class MightyPointGui extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         slideshowImagesList.setToolTipText("This is the Slideshow Reel");
+        slideshowImagesList.setDragEnabled(true);
         slideshowImagesList.setDropMode(javax.swing.DropMode.ON);
         slideshowImagesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         imagesSlidesPanel.setViewportView(slideshowImagesList);
 
         soundsSlidesList.setToolTipText("This is the soundtrack Reel.");
+        soundsSlidesList.setDragEnabled(true);
         soundsSlidesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         soundsSlidesPanel.setViewportView(soundsSlidesList);
 
@@ -481,12 +484,23 @@ public class MightyPointGui extends javax.swing.JFrame {
         firstFrame.setVisible(true);
         //setVisibility(true);
         newSlide.addActionListener((ActionEvent e) -> {
-            JFileChooser filechooser = new JFileChooser();
-            filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
-            filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            File imageDirectory = null;
+            boolean noDirectory = false;
+            while(noDirectory == false){
+                try{
+                    JFileChooser filechooser = new JFileChooser();
+                    filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
+                    filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    filechooser.showOpenDialog(null);
+                    imageDirectory = filechooser.getSelectedFile();
+                if(imageDirectory != null){
+                    noDirectory = true;
+                }
+                }catch(NullPointerException exception){
+                
+                }
+            }
             
-            filechooser.showOpenDialog(null);
-            File imageDirectory = filechooser.getSelectedFile();
             File fileDirectories[] = imageDirectory.listFiles();
             int counter = 0;
             PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
@@ -518,11 +532,11 @@ public class MightyPointGui extends javax.swing.JFrame {
             frame.setLayout(new FlowLayout());
             frame.setSize(990,700);             
             JLabel lbl=new JLabel();
-            lbl.setIcon(imageThumbnails.get(0).getImage());
+            lbl.setIcon(imageThumbnails.get(24).getImage());
             frame.add(lbl);
             frame.setVisible(true);
-            System.out.print("\nImage at" + imageThumbnails.get(0).getImagePath() + " displayed.");
-            //setVisibility(true); 
+            System.out.print("\nImage at" + imageThumbnails.get(24).getImagePath() + " displayed.");
+            
         });   
         
         
