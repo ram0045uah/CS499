@@ -24,6 +24,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import untitledslideshow.DisplayImage;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
@@ -505,8 +507,21 @@ public class MightyPointGui extends javax.swing.JFrame {
             catch(NullPointerException exception){
                 System.out.print("An exception was found at index: " + counter);
             }
-            
-            System.out.print(imagePaths);
+            ArrayList<DisplayImage> imageThumbnails = new ArrayList<>();
+            for(String jpegPath : imagePaths){
+                DisplayImage newImage = new DisplayImage();
+                newImage.setImagePath(jpegPath);
+                imageThumbnails.add(newImage);
+            }
+            System.out.print(imageThumbnails.size());
+            JFrame frame=new JFrame();
+            frame.setLayout(new FlowLayout());
+            frame.setSize(990,700);             
+            JLabel lbl=new JLabel();
+            lbl.setIcon(imageThumbnails.get(0).getImage());
+            frame.add(lbl);
+            frame.setVisible(true);
+            System.out.print("\nImage at" + imageThumbnails.get(0).getImagePath() + " displayed.");
             //setVisibility(true); 
         });   
         
