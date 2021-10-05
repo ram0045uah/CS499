@@ -9,6 +9,7 @@
  *
  * @author Roberto Murcia
  */
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -24,7 +25,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
+import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
 import untitledslideshow.DisplayImage;
 public class MightyPointGui extends javax.swing.JFrame {
     
@@ -49,12 +51,12 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         manualIntervalButton = new javax.swing.ButtonGroup();
         slideshowTitleLabel = new javax.swing.JLabel();
-        slideshowImagesScrollBar = new javax.swing.JScrollBar();
         saveButton = new javax.swing.JButton();
         filenameTextBox = new javax.swing.JTextField();
         mainTabbedPane = new javax.swing.JTabbedPane();
         imagesPanel = new javax.swing.JPanel();
         imagesScrollPane = new javax.swing.JScrollPane();
+        imagesList = new javax.swing.JList<>();
         imagesList = new javax.swing.JList<>();
         soundsPanel = new javax.swing.JPanel();
         soundsScrollPane = new javax.swing.JScrollPane();
@@ -82,17 +84,14 @@ public class MightyPointGui extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(990, 720));
-        setMinimumSize(new java.awt.Dimension(990, 720));
-        setPreferredSize(new java.awt.Dimension(990, 668));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1200, 800));
+        setMinimumSize(new java.awt.Dimension(1200, 800));
+        setPreferredSize(new java.awt.Dimension(1200, 800));
         setSize(new java.awt.Dimension(0, 0));
 
         slideshowTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         slideshowTitleLabel.setText("Untitled Slideshow Editor");
         slideshowTitleLabel.setMinimumSize(new java.awt.Dimension(250, 250));
-
-        slideshowImagesScrollBar.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
 
         saveButton.setText("Save and Export");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -101,14 +100,22 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
         });
 
-        imagesList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {""};
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        imagesList.setModel(new javax.swing.DefaultListModel<String>() {
+            String[] imageStrings = {null};
+            public int getSize() { return imageStrings.length; }
+            public String getElementAt(int i) { return imageStrings[i]; }
         });
+        imagesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        imagesList.setToolTipText("");
         imagesList.setDragEnabled(true);
+        imagesList.setFixedCellHeight(100);
+        imagesList.setFixedCellWidth(100);
         imagesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        imagesList.setName(""); // NOI18N
+        imagesList.setSelectionBackground(new java.awt.Color(0, 255, 0));
+        imagesList.setVisibleRowCount(1);
         imagesScrollPane.setViewportView(imagesList);
+        imagesList.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout imagesPanelLayout = new javax.swing.GroupLayout(imagesPanel);
         imagesPanel.setLayout(imagesPanelLayout);
@@ -121,8 +128,9 @@ public class MightyPointGui extends javax.swing.JFrame {
         );
         imagesPanelLayout.setVerticalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, imagesPanelLayout.createSequentialGroup()
-                .addComponent(imagesScrollPane)
+            .addGroup(imagesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(imagesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -206,7 +214,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         );
 
         slideshowImagesList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 1", "Item 1","Item 1", "Item 1", "Item 1", "Item 1", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -268,7 +276,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transitionLengthLabel)
                     .addComponent(transitionLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout extraSettingsPanelLayout = new javax.swing.GroupLayout(extraSettingsPanel);
@@ -283,9 +291,9 @@ public class MightyPointGui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(intervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(intervalLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
                 .addComponent(previewButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 387, Short.MAX_VALUE)
                 .addComponent(transitionSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -331,7 +339,6 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(slideshowImagesScrollBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(soundsSlidesPanel)
                     .addComponent(mainTabbedPane)
                     .addComponent(imagesSlidesPanel)
@@ -350,14 +357,12 @@ public class MightyPointGui extends javax.swing.JFrame {
                     .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saveButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainTabbedPane)
                 .addGap(18, 18, 18)
                 .addComponent(imagesSlidesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(soundsSlidesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(slideshowImagesScrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addComponent(extraSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -440,12 +445,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
      
     }//GEN-LAST:event_saveButtonActionPerformed
-    /*private static void setVisibility(boolean trueFalse){
-        isVisible = trueFalse;
-    }*/
-    /*private static boolean getVisible(){
-        return isVisible;
-    }*/
+
     /**
      * Main will begin by providing a popup, asking the user if they would like to
      * create a new slideshow, or import an old one. The editor should not open unless
@@ -456,6 +456,9 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /*
+        Creation of the frame for the popup
+        */
         JFrame firstFrame = new JFrame();
         firstFrame.setLayout(new FlowLayout());
         firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -472,7 +475,9 @@ public class MightyPointGui extends javax.swing.JFrame {
         firstFrame.add(newSlide);
         firstFrame.add(oldSlide);
                 
-        //----------------SIZE AND LOCATION OF POPUP------------------//
+        /*
+        Resizing and dimensions of the popup
+        */
         firstFrame.setPreferredSize(new Dimension(400,150));
         firstFrame.pack();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -480,9 +485,12 @@ public class MightyPointGui extends javax.swing.JFrame {
         int y = (int) ((dimension.getHeight() - firstFrame.getHeight()) / 2);
         firstFrame.setLocation(x, y);
         firstFrame.setResizable(false);
-        //firstFrame.setAlwaysOnTop(true);
         firstFrame.setVisible(true);
-        //setVisibility(true);
+        /**
+         * newSlide.addActionListener allows for the detection of the new slide
+         * button being pressed. If it is pressed, it will provide a JFileChooser
+         * popup and requests the desired directory of images.
+         */
         newSlide.addActionListener((ActionEvent e) -> {
             File imageDirectory = null;
             boolean noDirectory = false;
@@ -497,7 +505,6 @@ public class MightyPointGui extends javax.swing.JFrame {
                     noDirectory = true;
                 }
                 }catch(NullPointerException exception){
-                
                 }
             }
             
@@ -507,9 +514,9 @@ public class MightyPointGui extends javax.swing.JFrame {
             ArrayList<String> imagePaths = new ArrayList<>();
             try{
                 for (File fileDirectory : fileDirectories) {
-                    counter++;
                     Path filePath = fileDirectory.toPath();
                     if (matcher.matches(filePath)){
+                        counter++;
                         System.out.print("Item name: " + filePath + " is an image!\n");
                         imagePaths.add(filePath.toString());
                     }
@@ -521,21 +528,51 @@ public class MightyPointGui extends javax.swing.JFrame {
             catch(NullPointerException exception){
                 System.out.print("An exception was found at index: " + counter);
             }
+            
             ArrayList<DisplayImage> imageThumbnails = new ArrayList<>();
             for(String jpegPath : imagePaths){
                 DisplayImage newImage = new DisplayImage();
                 newImage.setImagePath(jpegPath);
                 imageThumbnails.add(newImage);
             }
+            //new MightyPointGui().setVisible(true);
             System.out.print(imageThumbnails.size());
-            JFrame frame=new JFrame();
+            MightyPointGui imag = new MightyPointGui();
+            imag.imagesList.setLayout(new FlowLayout());
+            imag.imagesList.setDragEnabled(true);
+            DefaultListModel dlm = new DefaultListModel();
+            
+            
+            //DropTarget dt = new DropTarget();
+            //imag.slideshowImagesList.setDropTarget(dt);
+            int i = 0;
+            for(DisplayImage listImage : imageThumbnails){
+                
+                //JPanel imagePanel = new JPanel();
+                //imagePanel.setSize(120, 120);
+                JLabel imageLabel = new JLabel();
+                //imagePanel.setLayout(new FlowLayout());
+                imageLabel.setIcon(listImage.getImage());
+                imageLabel.setSize(150, 150);
+                //imagePanel.add(imageLabel);
+                Component imageComp = imageLabel;
+                dlm.add(i, listImage.getImage());
+                //imag.imagesList.add(imageComp, i);
+                i++;
+            }
+            imag.imagesList.setModel(dlm);
+            imag.setVisible(true);
+            firstFrame.setVisible(false);
+            /*JFrame frame=new JFrame();
             frame.setLayout(new FlowLayout());
-            frame.setSize(990,700);             
+            frame.setSize(100,150);             
             JLabel lbl=new JLabel();
-            lbl.setIcon(imageThumbnails.get(24).getImage());
+            lbl.setIcon(imageThumbnails.get(1).getImage());
             frame.add(lbl);
             frame.setVisible(true);
-            System.out.print("\nImage at" + imageThumbnails.get(24).getImagePath() + " displayed.");
+            System.out.print("\nImage at " + imageThumbnails.get(1).getImagePath() + " displayed.\n");
+            */
+            
             
         });   
         
@@ -543,7 +580,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MightyPointGui().setVisible(true);
+            
         });
     }
 
@@ -565,7 +602,6 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JButton previewButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JList<String> slideshowImagesList;
-    private javax.swing.JScrollBar slideshowImagesScrollBar;
     private javax.swing.JLabel slideshowTitleLabel;
     private javax.swing.JButton soundSelectButton;
     private javax.swing.JList<String> soundsList;
