@@ -7,7 +7,7 @@ package untitledslideshow;
 
 /**
  *
- * @author Nikol
+ * @author Roberto Murcia
  */
 public class UntitledSlideshow {
 
@@ -15,7 +15,7 @@ public class UntitledSlideshow {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
     
 }

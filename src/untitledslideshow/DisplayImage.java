@@ -40,8 +40,9 @@ public class DisplayImage {
      * @throws IOException 
      */
     public ImageIcon getDisplayImage(String path) throws IOException {
+        
         BufferedImage img = ImageIO.read(new File(path));
-        BufferedImage thumbnail = resize(img,100,150);                          // 100x150 is preferred size for thumbnails
+        BufferedImage thumbnail = resize(img,175,175);                          // 100x150 is preferred size for thumbnails
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
         return icon;
     }
