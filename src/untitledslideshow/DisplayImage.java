@@ -17,6 +17,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.TransferHandler;
+//import javax.swing.TransferHandler;
 
 /**
  * 
@@ -26,7 +32,9 @@ import java.awt.Graphics2D;
 public class DisplayImage {
     private String imagePath;
     private ImageIcon image;
-    private boolean isValid = true;
+    private DragMouseAdapter listener;
+    private JLabel imageLabel;
+    private int indexNum;
     /**
      * Constructor for DisplayImage
      */
@@ -48,7 +56,13 @@ public class DisplayImage {
         {
             return null;
         }
+        
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
+        this.imageLabel = new JLabel();
+        this.imageLabel.setIcon(new ImageIcon(path));
+        this.imageLabel.addMouseListener(listener);
+        this.imageLabel.setTransferHandler(new TransferHandler("icon"));
+        
         return icon;
     }
     
@@ -98,6 +112,23 @@ public class DisplayImage {
         }
         return image;
     }
-    
+    public JLabel getLabel(){
+        return this.imageLabel;
+    }
+    private class DragMouseAdapter extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            var c = (JComponent) e.getSource();
+            var handler = c.getTransferHandler();
+            handler.exportAsDrag(c, e, TransferHandler.COPY);
+        }
+    }
+
+    public void setIndex(int i){
+        this.indexNum = i;
+    }
+    public int getIndex(){
+        return indexNum;
+    }
     
 }
