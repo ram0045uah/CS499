@@ -28,15 +28,12 @@ import javax.swing.JLabel;
 public class DisplayImage {
     private String imagePath;
     private ImageIcon image;
-    private boolean isValid = true;
     private JLabel imageLabel;
     /**
      * Constructor for DisplayImage
      */
     public DisplayImage(){
-        JLabel imageLabel = new JLabel();
-        imageLabel.setBounds(150, 150, 150, 150);
-        imageLabel.addMouseListener(new RightClickListener());
+        
     }
     /**
      * getDisplayImage acquires the image at the given path, and creates an icon
@@ -54,7 +51,13 @@ public class DisplayImage {
             return null;
         }
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
-        imageLabel.setIcon( (Icon) icon);
+        /*try{
+            this.imageLabel.setBounds(150, 150, 150, 150);
+            this.imageLabel.addMouseListener(new ClickListener());
+            this.imageLabel.setIcon((Icon) icon);
+        }catch(NullPointerException e){
+        }*/
+        
         return icon;
     }
     
