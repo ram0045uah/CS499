@@ -17,12 +17,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JComponent;
+import javax.swing.Icon;
 import javax.swing.JLabel;
-import javax.swing.TransferHandler;
-//import javax.swing.TransferHandler;
 
 /**
  * 
@@ -32,14 +28,15 @@ import javax.swing.TransferHandler;
 public class DisplayImage {
     private String imagePath;
     private ImageIcon image;
-    private DragMouseAdapter listener;
+    private boolean isValid = true;
     private JLabel imageLabel;
-    private int indexNum;
     /**
      * Constructor for DisplayImage
      */
     public DisplayImage(){
-        
+        JLabel imageLabel = new JLabel();
+        imageLabel.setBounds(150, 150, 150, 150);
+        imageLabel.addMouseListener(new RightClickListener());
     }
     /**
      * getDisplayImage acquires the image at the given path, and creates an icon
@@ -56,13 +53,8 @@ public class DisplayImage {
         {
             return null;
         }
-        
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
-        this.imageLabel = new JLabel();
-        this.imageLabel.setIcon(new ImageIcon(path));
-        this.imageLabel.addMouseListener(listener);
-        this.imageLabel.setTransferHandler(new TransferHandler("icon"));
-        
+        imageLabel.setIcon( (Icon) icon);
         return icon;
     }
     
@@ -112,23 +104,6 @@ public class DisplayImage {
         }
         return image;
     }
-    public JLabel getLabel(){
-        return this.imageLabel;
-    }
-    private class DragMouseAdapter extends MouseAdapter {
-        @Override
-        public void mousePressed(MouseEvent e) {
-            var c = (JComponent) e.getSource();
-            var handler = c.getTransferHandler();
-            handler.exportAsDrag(c, e, TransferHandler.COPY);
-        }
-    }
-
-    public void setIndex(int i){
-        this.indexNum = i;
-    }
-    public int getIndex(){
-        return indexNum;
-    }
+    
     
 }
