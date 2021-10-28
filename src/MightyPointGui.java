@@ -88,6 +88,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         slideshowTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         slideshowTitleLabel.setText("Untitled Slideshow Editor");
         slideshowTitleLabel.setMinimumSize(new java.awt.Dimension(250, 250));
+        slideshowTitleLabel.addMouseListener(new ClickListener());
 
         saveButton.setText("Save and Export");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +114,9 @@ public class MightyPointGui extends javax.swing.JFrame {
         imagesList.setVisibleRowCount(1);
         imagesScrollPane.setViewportView(imagesList);
         imagesList.getAccessibleContext().setAccessibleName("");
+        imagesList.addMouseListener(new ClickListener());
+        imagesList.setName("imagesList");
+        imagesList.setCellRenderer(new ElementRenderer());
 
         javax.swing.GroupLayout imagesPanelLayout = new javax.swing.GroupLayout(imagesPanel);
         imagesPanel.setLayout(imagesPanelLayout);
@@ -140,6 +144,8 @@ public class MightyPointGui extends javax.swing.JFrame {
         });
         soundsList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         soundsScrollPane.setViewportView(soundsList);
+        soundsList.setName("soundsList");
+        soundsList.addMouseListener(new ClickListener());
 
         soundSelectButton.setText("Import Sound File");
         soundSelectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -221,6 +227,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsSlidesPanel.setViewportView(soundsSlidesList);
 
         extraSettingsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        extraSettingsPanel.addMouseListener(new ClickListener());
 
         manualIntervalButton.add(manualButton);
         manualButton.setText("Manual Slides");
@@ -311,6 +318,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         );
 
         slideShowReelPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        slideShowReelPanel.addMouseListener(new ClickListener());
 
         javax.swing.GroupLayout slideShowReelPanelLayout = new javax.swing.GroupLayout(slideShowReelPanel);
         slideShowReelPanel.setLayout(slideShowReelPanelLayout);
@@ -365,7 +373,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(slideShowReelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(slideShowReelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(soundsSlidesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
@@ -534,7 +542,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         DefaultListModel dlm = new DefaultListModel();
         int i = 0;
         for(DisplayImage listImage : thumbImages){
-            dlm.add(i, listImage.getImage());
+            dlm.add(i, listImage);
             i++;
         }
         ImageReel reel = new ImageReel(thumbImages);
