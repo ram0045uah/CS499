@@ -52,6 +52,9 @@ public class ClickPopUp extends JPopupMenu{
                 tempGui.imagesReel.setModel(tempModel);
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
                 //System.out.println("Added to End of Reel: " + tempGui.imagesReel.getModel().getElementAt(endIndex).toString());
+                if(tempGui.imagesReel.getModel().getSize() > 0){
+                    tempGui.setVisible(true);
+                }
                 
             });
             /**
