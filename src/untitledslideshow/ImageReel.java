@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package untitledslideshow;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 
@@ -18,26 +16,30 @@ public class ImageReel extends JList{
     private DefaultListModel imageModel;
     private int modelSize;
 
-    public ImageReel(ArrayList<DisplayImage> list) {
+    public ImageReel() {
         super(new DefaultListModel());
-        this.setName("imageReel");
-        imageModel = (DefaultListModel) getModel();
-        this.setFixedCellHeight(150);
-        this.setFixedCellWidth(150);
-        this.setAutoscrolls(true);
-        this.setVisibleRowCount(1);
-        this.setLayoutOrientation(HORIZONTAL_WRAP);
-        this.addMouseListener(new ClickListener());
-        this.setSize(500, 1000);
+        this.imageModel = (DefaultListModel) getModel();
+        setFixedCellHeight(150);
+        setFixedCellWidth(150);
+        setAutoscrolls(true);
+        setVisibleRowCount(1);
+        setLayoutOrientation(HORIZONTAL_WRAP);
+        //this.addMouseListener(new ClickListener(this));
+        setSize(500, 1000);
+        this.setName("imagesReel");
         modelSize = imageModel.size();
+        
     }
     public void addImage2Reel(ImageIcon image, int index){
         this.imageModel.add(index, image);
         this.modelSize++;
+        updateReelModel(this.imageModel);
+        
     }
     public void removeImageFromReel(int index){
         this.imageModel.remove(index);
         this.modelSize--;
+        updateReelModel(this.imageModel);
     }
     public void shiftLeft(int index){
         if(index - 1 < 0){
@@ -48,6 +50,7 @@ public class ImageReel extends JList{
             var tempElement2 = this.imageModel.getElementAt(index-1);
             this.imageModel.setElementAt(tempElement, index-1);
             this.imageModel.setElementAt(tempElement2, index);
+            updateReelModel(this.imageModel);
             System.out.println("Element shifted to the left");
         }
     }
@@ -60,11 +63,15 @@ public class ImageReel extends JList{
             var tempElement2 = this.imageModel.getElementAt(index+1);
             this.imageModel.setElementAt(tempElement, index+1);
             this.imageModel.setElementAt(tempElement2, index);
+            updateReelModel(this.imageModel);
             System.out.println("Element shifted to the right");
         }
     }
     
     public DefaultListModel updateModel(){
-        return this.imageModel;
+        return imageModel;
+    }
+    private void updateReelModel(DefaultListModel newModel){
+        imageModel = newModel;
     }
 }

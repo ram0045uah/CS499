@@ -14,13 +14,12 @@ import java.awt.event.MouseEvent;
  * @author Roberto Murcia
  */
 public class ClickListener extends MouseAdapter{
-    @Override
+
     public void mousePressed(MouseEvent e){
         //if(e.isPopupTrigger()){
             showPopUp(e);
         //}
     }
-    @Override
     public void mouseReleased(MouseEvent e){
         if(e.isPopupTrigger()){
             showPopUp(e);

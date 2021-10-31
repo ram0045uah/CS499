@@ -17,8 +17,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Graphics2D;
-import javax.swing.Icon;
-import javax.swing.JLabel;
 
 /**
  * 
@@ -28,7 +26,6 @@ import javax.swing.JLabel;
 public class DisplayImage {
     private String imagePath;
     private ImageIcon image;
-    private JLabel imageLabel;
     /**
      * Constructor for DisplayImage
      */
@@ -42,7 +39,7 @@ public class DisplayImage {
      * @return is used to return the icon for the thumbnail for the image
      * @throws IOException 
      */
-    public ImageIcon getDisplayImage(String path) throws IOException {
+    public ImageIcon getDisplayImage(String path) throws IOException{
         
         BufferedImage img = ImageIO.read(new File(path));
         BufferedImage thumbnail = resize(img,175,175);                          // 100x150 is preferred size for thumbnails

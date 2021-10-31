@@ -8,7 +8,6 @@ package untitledslideshow;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -26,6 +25,7 @@ public class ElementRenderer extends JLabel implements ListCellRenderer{
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         try{
+            //addMouseListener(new ClickListener());
             DisplayImage image = (DisplayImage) value;
             setText(image.getImagePath());
             setIcon(image.getImage());
